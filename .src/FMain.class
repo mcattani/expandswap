@@ -1,0 +1,242 @@
+' Gambas class file
+
+Public Path As String
+Public Size As Integer
+Public Pass As String
+
+Public Sub Form_Open()
+  ' Solicitamos de entrada la contraseña de SUDO para poder realizar todas las operaciones subsiguientes
+
+  pass = InputBox("Contraseña de Sudo/Root?", "Contraseña")
+
+  If pass = "" Then
+    Message.Warning("La aplicación no funcionará correctamente sin los privilegios necesarios.")
+  Endif
+
+  txSize.Text = MemSwapLibre()
+
+End
+
+Public Sub sbTam_Change()
+  ' Recoje los valores de tamaño seleccionados por el usuario y ajusta la expresión del tamaño
+
+  Size = sbTam.Value
+
+  If sbTam.Value > 1000 Then
+    lblSize.Text = sbTam.Value / 1000
+    lblSize.Text = lblSize.Text & " GB"
+
+  Else
+    lblSize.Text = sbTam.Value
+    lblSize.Text = lblSize.Text & " MB"
+  Endif
+
+  Print size
+  Print Path
+
+End
+
+Public Sub wz_Cancel()
+
+  Quit
+
+End
+
+Public Sub txUbic_Change()
+
+  Path = txUbic.Text
+
+End
+
+Public Sub btCrear_Click()
+
+  Dim ASK As Integer
+  Dim Comm As String
+  Dim hProcess As Process
+
+  If size = 0 Then
+    Message.Error("El tamaño del fichero SWAP no puede ser 0")
+    Return
+
+  Endif
+
+  path = txUbic.Text
+
+  ASK = Message.Warning("Seguro desea crear la imagen para SWAP de " & size & " MB en: " & Path, "Seguro", "No")
+
+  If ask = 2 Then Return
+
+  Path = txUbic.Text
+  size = sbTam.Value
+
+  ' Comando para crear un fichero con el tamaño que deseemos asignar a la swap
+  COMM = " | sudo -S dd status=progress if=/dev/zero of=" & Path & " bs=1M " & " count=" & Size
+
+  Print comm
+
+  ' Ejecutamos el comando para la creación del fichero
+  Try hProcess = Shell ("echo " & Pass & COMM) For Read As "Proceso"
+  If Error
+    Message.Error(Error.Code & Error.Text)
+  Endif
+
+  ' Mostramos la salida
+  Do While hProcess.State = Process.Running
+    Wait 1
+    SP1.Visible = True
+    txSalidaCR.Text = "Espere..."
+  Loop
+
+  SP1.visible = False
+
+  txSalidaCR.Text = "Archivo Swap creado con éxito!"
+
+End
+
+Public Sub Proceso_read()
+
+  Dim sLine As String
+
+  sline = Read #Last, Lof(Last)
+  txSalidaCR.Text &= sLine
+  txSalidaCR.EnsureVisible()
+
+End
+
+Public Sub btCrear4_Click()
+
+  Dim Comm As String
+
+  ' Comando para activar el fichero creado como SWAP
+  Comm = " | sudo -S swapon " & Path
+
+  Shell ("echo " & Pass & comm)
+
+  txActiv.Text = "Memoria de intercambio SWAP activada con exito!"
+
+End
+
+Public Sub btFormat_Click()
+
+  Dim COMM As String
+  Dim hProcess As Process
+
+  ' Comando para formatear el fichero y prepararlo para la SWAP
+  Comm = " | sudo -S mkswap " & Path
+
+  Try hprocess = Shell ("echo " & Pass & comm) For Read As "Proceso2"
+  If Error
+    Message.Error(Error.Code & Error.Text)
+  Endif
+
+  Do While hProcess.State = hProcess.Running
+    Wait 1
+    SP2.visible = True
+
+  Loop
+
+  txFormat.Text = txFormat.Text & gb.NewLine & "Listo, unidad formateada con exito!"
+  SP2.visible = False
+
+End
+
+Public Sub Proceso2_read()
+
+  Dim sLine As String
+
+  sline = Read #Last, Lof(Last)
+  txFormat.Text &= sLine
+  txFormat.EnsureVisible()
+
+End
+
+Public Sub btCHK_Click()
+
+  txSize.Text = ""
+  txSize.Text = MemSwapLibre()
+
+End
+
+Public Function MemSwapLibre() As String
+  ' comando a usar cat /proc/meminfo | grep "Swap"
+
+  Dim Salida As String, Comm As String
+
+  Comm = "cat /proc/meminfo | grep " & Chr(34) & "Swap" & Chr(34)
+  Print comm
+
+  Shell (comm) To Salida
+
+  Return Salida
+
+End
+
+Public Sub mnSalir_Click()
+
+  Quit
+
+End
+
+Public Sub mnPerm_Click()
+
+  frmExtra.Show
+
+End
+
+Public Sub btOFF_Click()
+
+  Dim Comm As String
+
+  ' Comando para desactivar la SWAP creada
+  Comm = " | sudo -S swapoff " & Path
+
+  Shell ("echo " & Pass & comm)
+
+  txActiv.Text = "Memoria de intercambio SWAP desactivada..."
+
+End
+
+Public Function Free() As String
+
+  Dim COMM As String, Salida As String
+
+  COMM = "cat /proc/meminfo | grep " & Chr(34) & "Swap" & Chr(34)
+
+  Shell (comm) To Salida
+
+  Return Salida
+
+End
+
+Public Sub mnAcerca_Click()
+
+  frmAbout.Show
+
+End
+
+Public Sub btnSalir_Click()
+
+  Quit
+
+End
+
+Public Sub TMR_Timer()
+
+  Dim COMM As String, Salida As String
+
+  COMM = "cat /proc/meminfo | grep " & Chr(34) & "Swap" & Chr(34)
+  ' '
+  Shell (comm) To Salida
+
+  txSWAP.Text = Salida
+
+End
+
+Public Sub Form_KeyPress()
+
+  If Key.code = Key.Esc Then
+    Quit
+
+  Endif
+
+End

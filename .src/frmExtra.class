@@ -1,0 +1,20 @@
+' Gambas class file
+
+Public Sub URLLabel1_Click()
+  ' Abrimos link en navegador por defecto, para eso tenemos que tener habilitado gb.desktop
+
+  Desktop.Open(URLLabel1.Text)
+
+End
+
+Public Sub Form_KeyPress()
+
+  If Key.code = Key.esc Then Me.Close
+
+End
+
+Public Sub btCerrar_Click()
+
+  Me.Close
+
+End

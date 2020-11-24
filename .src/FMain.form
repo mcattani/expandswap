@@ -1,0 +1,170 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,70,73)
+  Background = Color.ButtonBackground
+  Text = ("/* EXPANSION SWAP */")
+  Icon = Picture["icon:/32/system"]
+  Resizable = False
+  { Menu3 Menu
+    Text = ("Más Información")
+    { mnPerm Menu
+      Text = ("Más Información")
+      Picture = Picture["icon:/32/user"]
+    }
+    { mnAcerca Menu
+      Text = ("Acerca de ") & "..."
+      Picture = Picture["icon:/22/gambas"]
+    }
+  }
+  { TextLabel1 TextLabel
+    MoveScaled(1,1,68,5)
+    Font = Font["Bold,+2"]
+    Text = ("Amplia la memoria de intercambio de manera temporal")
+    Alignment = Align.Center
+    Border = Border.Plain
+  }
+  { Sep1 Separator
+    MoveScaled(-1,-1,63,2)
+  }
+  { wz Wizard
+    MoveScaled(1,7,68,50)
+    Count = 3
+    Index = 0
+    Text = ("Paso #1 - Ubicación")
+    { TextLabel2 TextLabel
+      MoveScaled(1,0,65,15)
+      Font = Font["+1"]
+      Text = ("Este programa amplía la memoria de intercambio (o SWAP) de manera temporal. Para tal fin y por defecto, crea y monta un fichero llamado swapfile.img y lo ubica en el directorio /tmp.  Puede definirse un nombre y una ubicación específica en el cuadro de diálogo debajo.")
+      Alignment = Align.Left
+    }
+    { TextLabel3 TextLabel
+      MoveScaled(1,14,65,10)
+      Font = Font["+1"]
+      Text = ("El proceso consta de 3 pasos: Creación del archivo, formateo y activación.\nLa ampliación se perderá al reiniciar el sistema.\n")
+      Alignment = Align.Justify
+    }
+    { txUbic TextBox
+      MoveScaled(1,23,65,4)
+      ToolTip = ("Ruta y nombre del archivo que se utilizará para la ampliación")
+      Text = ("/tmp/swapfile.img")
+    }
+    { sbTam SliderBox
+      MoveScaled(18,29,48,6)
+      ToolTip = ("Seleccione el tamaño de la ampliación temporal deseada")
+      MaxValue = 6000
+    }
+    { TextLabel6 TextLabel
+      MoveScaled(2,29,15,3)
+      Font = Font["+1"]
+      Text = ("Tamaño (MB):")
+      Alignment = Align.Justify
+    }
+    { lblSize TextLabel
+      MoveScaled(13,33,30,5)
+      Font = Font["Bold,+1"]
+      Alignment = Align.Justify
+    }
+    { TextLabel4 TextLabel
+      MoveScaled(3,33,10,5)
+      Font = Font["+1"]
+      Text = ("Tamaño:")
+      Alignment = Align.Justify
+    }
+    Index = 1
+    Text = ("Paso #2 - Crear Archivo Vacio (funcionara como partición)")
+    { btCrear Button
+      MoveScaled(1,1,15,4)
+      Font = Font["+1"]
+      ToolTip = ("Crea el archivo vacío que luego funcionará como partición SWAP")
+      Text = ("Crear")
+      Picture = Picture["icon:/32/wizard"]
+    }
+    { txSalidaCR TextArea
+      MoveScaled(1,6,65,13)
+      ReadOnly = True
+      Wrap = True
+    }
+    { txFormat TextArea
+      MoveScaled(1,25,65,13)
+      ReadOnly = True
+      Wrap = True
+    }
+    { btFormat Button
+      MoveScaled(1,20,18,4)
+      Font = Font["+1"]
+      ToolTip = ("Formatea partición SWAP")
+      Text = ("Formateo")
+      Picture = Picture["icon:/22/revert"]
+    }
+    { Label2 Label
+      MoveScaled(20,20,46,4)
+      Text = ("Luego de creado el archivo es necesario formatearlo")
+    }
+    Index = 2
+    Text = ("Paso #3 - Activar la SWAP en el archivo recien creado y chequear.")
+    { txActiv TextArea
+      MoveScaled(1,6,65,13)
+      ReadOnly = True
+      Wrap = True
+    }
+    { btCHK Button
+      MoveScaled(1,20,45,4)
+      Font = Font["+1"]
+      ToolTip = ("Si no hay diferencia entre el valor antiguo y el nuevo es que el proceso ha fallado")
+      Text = ("Chequear el nuevo tamaño de la SWAP")
+      Picture = Picture["icon:/22/script"]
+    }
+    { txSize TextArea
+      MoveScaled(1,25,65,13)
+      ReadOnly = True
+      Wrap = True
+    }
+    { btCrear4 Button
+      MoveScaled(0.8571,1.2857,23,4)
+      Font = Font["+1"]
+      ToolTip = ("Activa SWAP")
+      Text = ("Activar SWAP")
+      Picture = Picture["icon:/22/refresh"]
+    }
+    { btOFF Button
+      MoveScaled(35,1,31,4)
+      Font = Font["+1"]
+      ToolTip = ("Desactiva la SWAP creada ")
+      Text = ("Desactiva la SWAP creada")
+      Picture = Picture["icon:/22/remove"]
+    }
+    { TMR #Timer
+      #MoveScaled(60,19)
+      Enabled = True
+    }
+    Index = 0
+  }
+  { SP1 Spinner
+    MoveScaled(31,22,9,8)
+    Visible = False
+  }
+  { SP2 Spinner
+    MoveScaled(31,40,9,8)
+    Visible = False
+  }
+  { Label1 Label
+    MoveScaled(1,58,23,10)
+    Text = ("Tamaño actual de la SWAP:")
+    Alignment = Align.Center
+    Border = Border.Plain
+  }
+  { txSWAP TextArea
+    MoveScaled(24,58,26,10)
+    ToolTip = ("Tamaño actual de la memoria SWAP")
+    Alignment = Align.Left
+    ReadOnly = True
+    ScrollBar = Scroll.None
+  }
+  { btnSalir Button
+    MoveScaled(51,61,18,5)
+    ToolTip = ("Salir de la aplicación")
+    Text = ("Salir")
+    Picture = Picture["icon:/22/quit"]
+  }
+}

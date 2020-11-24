@@ -1,0 +1,25 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,68,24)
+  Text = ("// Información Adicional //")
+  Icon = Picture["icon:/32/question"]
+  SkipTaskbar = True
+  { TextLabel1 TextLabel
+    MoveScaled(1,-4,65,22)
+    Text = ("Dejo el link de la página web de donde saqué la información necesaria para hacer esta aplicación. \nEn la misma se detallan los pasos a seguir utilizando los comandos en la terminal; así como también la manera de hacer que esta ampliación de memoria de intercambio sea permanente. \n")
+    Alignment = Align.Justify
+  }
+  { URLLabel1 URLLabel
+    MoveScaled(1,12,65,5)
+    Font = Font["+1"]
+    ToolTip = ("Click aquí para abrir el vínculo en su navegador")
+    Text = ("http://www.ajpdsoft.com/modules.php?name=News&file=article&sid=254")
+    Link = "http://www.ajpdsoft.com/modules.php?name=News&file=article&sid=254"
+  }
+  { btCerrar Button
+    MoveScaled(55,17,11,5)
+    Text = ("Cerrar")
+    Picture = Picture["icon:/22/cancel"]
+  }
+}
