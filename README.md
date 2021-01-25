@@ -15,7 +15,9 @@ Me ha pasado de estar realizando tareas verdaderamente exigentes en términos de
 
 De esta página (https://www.ajpdsoft.com/modules.php?name=News&file=article&sid=254) saqué la información necesaria para hacer la aplicación; en la misma se encuentran también los pasos a seguir para que dicha ampliación funcione de manera permanente. Aunque lo recomendable siempre es aumentar el tamaño de la partición swap y no este método.
 
-Si esta app te pareció interesante o querés hacer algun comentario, por favor dejá un mensaje en el blog!
+Para más información visitá el blog:
 https://thenerdyapprentice.blogspot.com/2020/05/programa-para-expandir-temporalmente-la.html
+
+Comentarios bienvenidos!
 
 Saludos!
